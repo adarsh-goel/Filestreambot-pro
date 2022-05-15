@@ -120,8 +120,8 @@ async def media_streamer(request: web.Request, message_id: int, secure_hash: str
         until_bytes = request.http_range.stop or file_size - 1
 
     req_length = until_bytes - from_bytes
-    new_chunk_size = await chunk_size(req_length)
-    offset = await offset_fix(from_bytes, new_chunk_size)
+    new_chunk_size = chunk_size(req_length)
+    offset = offset_fix(from_bytes, new_chunk_size)
     first_part_cut = from_bytes - offset
     last_part_cut = (until_bytes % new_chunk_size) + 1
     part_count = math.ceil(req_length / new_chunk_size)
